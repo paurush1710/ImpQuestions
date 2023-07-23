@@ -1,0 +1,16 @@
+	select * from employee where max(salary);
+	select * from employee order by salary desc;
+	select * from employee order by salary group by 'department'
+	
+	select d.department_name from  e as employee Inner Join d as department on e.id=d.id ;
+
+----------------------
+
+Emp(ID,Name,DeptID)
+Dept(ID,Name)
+
+select e.name from Emp as e JOIN Dept as d
+on e.DeptID == d.ID AND d.Name IN 'Gurukul';
+
+-------------------------
+
