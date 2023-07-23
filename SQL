@@ -14,3 +14,9 @@ on e.DeptID == d.ID AND d.Name IN 'Gurukul';
 
 -------------------------
 
+SELECT MAX(SALARY) FROM Employee WHERE SALARY < (SELECT MAX(SALARY) FROM Employee);
+
+-------------------------
+
+
+
