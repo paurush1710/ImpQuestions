@@ -1,0 +1,6 @@
+  @Query(from eployee where tech=?1 order by aname)
+  List<Alien> findByTechSortByName(String tech);
+  
+  List<Alien> findByTech(String tech);
+  
+  List<Alien> findByAidGreaterThan(int aid);
