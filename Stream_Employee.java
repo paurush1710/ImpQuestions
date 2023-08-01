@@ -390,3 +390,20 @@ class Employee {
 				+ department + ", Year Of Joining : " + yearOfJoining + ", Salary : " + salary;
 	}
 }
+
+
+// Query 1 : How many male and female employees are there in the organization?
+// Query 2 : Print the name of all departments in the organization?
+// Query 3 : What is the average age of male and female employees?
+// Query 4 : Get the details of highest paid employee in the organization?
+// Query 5 : Get the names of all employees who have joined after 2015?
+// Query 6 : Count the number of employees in each department?
+// Query 7 : What is the average salary of each department?
+// Query 8 : Get the details of youngest male employee in the product development department?
+// Query 9 : Who has the most working experience in the organization?
+// Query 10 : How many male and female employees are there in the sales and marketing team?
+// Query 11 : What is the average salary of male and female employees?
+// Query 12 : List down the names of all employees in each department?
+// Query 13 : What is the average salary and total salary of the whole organization?
+// Query 14 : Separate the employees who are younger or equal to 25 years from those employees who are older than 25 years.
+// Query 15 : Who is the oldest employee in the organization? What is his age and which department he belongs to?
