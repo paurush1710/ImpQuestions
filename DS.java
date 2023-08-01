@@ -41,4 +41,48 @@ Q. Sort it
 Input array   =  [0, 1, 0, 1, 0, 0, 1, 1, 1, 0] 
 Output array =  [0, 0, 0, 0, 0, 1, 1, 1, 1, 1]
 ---------------------------------------------------------------------------
+Q. Reverse String 
 
+public String reverseString(String s){
+
+String newS = "";
+
+for(int i = s.length()-1; i>=0; i--){
+    newS = newS + s.charAt(i);
+}
+return newS;
+	
+}
+---------------------------------------------------------------------------
+Q. String isPalindrome or not
+
+public boolean isPalindrome(String s, int si, int ei){
+                                          
+	
+	if(si==ei){
+	return true;
+	}
+	
+	if(si>ei){
+	return true;
+	}
+	
+	if(s.charAt(si)==s.charAt(ei)){
+	      return isPalindrome(s, si+1, ei-1);
+	}
+	
+	else{
+	return false;
+	}
+
+}
+
+public boolean isPalindrome(String s){
+      
+	   if(s.length()==0){
+	     return true;
+	}
+	  
+      return isPalindrome(s, 0, s.length()-1);
+}
+---------------------------------------------------------------------------
