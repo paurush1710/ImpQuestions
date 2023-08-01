@@ -1,4 +1,4 @@
-	HashMap<String, Integer> hm = new HashMap<String, Integer>();
+HashMap<String, Integer> hm = new HashMap<String, Integer>();
  
         // enter data into hashmap
         hm.put("Math", 98);
@@ -11,4 +11,8 @@
 
 ------------------------------------------
 
-  
+Map<String, Long> map = str.stream(split("")).collect(Collectors.groupingBy(Function.identity(), Collectors.counting());
+sysout(map);
+
+------------------------------------------
+
