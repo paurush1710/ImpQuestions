@@ -19,4 +19,12 @@ SELECT MAX(SALARY) FROM Employee WHERE SALARY < (SELECT MAX(SALARY) FROM Employe
 -------------------------
 
 
+select * from employee order by salary desc limit 1,1;
+select * from employee order by salary desc limit 2,1;
+
+-------------------------
+
+
+
+
 
