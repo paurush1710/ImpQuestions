@@ -15,6 +15,8 @@ HashMap<String, Integer> hm = new HashMap<String, Integer>();
         System.out.println(hm2);
 
 // {Chemistry=45, Operating System=64, English=79, Networking=80, Maths=86, Hindi=95, Java=97}
+
+       hm.entrySet().stream().sorted((e1,e2) -> e1.getValue().compareTo(e2.getValue())).forEach(e -> System.out.println(e.getKey()+" "+e.getValue()));
      
 ------------------------------------------
 
