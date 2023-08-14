@@ -7,8 +7,15 @@ HashMap<String, Integer> hm = new HashMap<String, Integer>();
         hm.put("Java", 95);
         hm.put("Operating System", 79);
         hm.put("Networking", 80);
-        Map<String, Integer> hm1 = sortByValue(hm);
 
+         Map<Object, Object> hm2 = hm.entrySet().stream()
+        .sorted(Entry.comparingByValue())
+        .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1,e2)-> e1, LinkedHashMap::new));
+        
+        System.out.println(hm2);
+
+// {Chemistry=45, Operating System=64, English=79, Networking=80, Maths=86, Hindi=95, Java=97}
+     
 ------------------------------------------
 
 Map<String, Long> map = str.stream(split("")).collect(Collectors.groupingBy(Function.identity(), Collectors.counting());
