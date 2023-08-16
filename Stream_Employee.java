@@ -281,6 +281,12 @@ public class EmployeeStreamDemo {
 				System.out.println("Average Salary = "+employeeSalaryStatistics.getAverage());
 				         
 				System.out.println("Total Salary = "+employeeSalaryStatistics.getSum());
+
+		// Gender wise Salary
+		
+		Map<String, DoubleSummaryStatistics> empSalary = employeeList.stream().collect(Collectors.groupingBy(Employee::getGender, Collectors.summarizingDouble(Employee::getSalary)));
+		empSalary.entrySet().stream().forEach(e-> System.out.println(e.getKey() +" : " + e.getValue().getSum()));
+	
 	}
 
 	public static void method14() {
