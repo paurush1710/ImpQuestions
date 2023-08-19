@@ -1,0 +1,122 @@
+JVM Architecture
+How are static methods loaded, When are they loaded, in which memory
+Class Loaders -> JRE calls them to load classed to JVM
+        1) Bootstrap CL
+		2) Extension CL
+		3) Application CL
+		 		 
+Java is passByValue or passByReference -> passByValue
+What is immutable class? How to make it.
+What is serializable interface. How to serialize object, What if we don't want to write a property to mem.? 
+What is marker interface? Types & Eg
+
+
+Why is String immutable? Where is it stored.
+Ways of creating string.
+Diff b/w string, string buffer, string builder
+
+What is stream, What is intermediate fn, What is terminal fn. Name few 
+findFirst, findAny
+stream & parallelStream(On how many core it works)
+diff b/w map & flatmap
+
+What if we don't want to initialize all beans on spring application startup?
+Type of Scope in Spring Boot Application
+Spring Profile
+Spring Security, How its implemented in your application
+Practice Creating REST API (also try connecting with DB, with postman)
+Spring Data JPA (with Custom Query)
+@Patch vs @Post
+Protocols used in REST API
+Status code
+Status code after get, post
+REST Template, How can we hit endpoints from our normal Java Code 
+@Qualifier, @Autowired, @EnableAutoConfiguration
+
+
+Binary Search (with code)
+Bubble Sort (with Code)   (https://www.youtube.com/watch?v=F5MZyqRp_IM)
+
+ 
+Singleton Design Pattern (learn with code)
+Factory Design Pattern
+( https://www.youtube.com/playlist?list=PL0zysOflRCek8kmc_jYl_6C7tpud7U2V_  -> Watch 1st 4 videos )
+
+What server/application server do you using in your application
+Application server, web server
+SOLID
+Anti Pattern
+
+
+With the help of set can we use queue?
+Big O(n) worst and best case for list, set, Hashset, HashMap
+How hashset is storing values internally
+equals(), hashcode() in HashMap while trying to store object as Key
+Diff b/w ArrayList & LinkedList
+         List & Set
+		 Set & Map
+		 Sorted Set & Hashset
+		 Hashset, HashMap, HashTree
+Internal working of HashMap
+Which collection can contain null values
+Can we store object as key in HashMap
+
+
+HIBERNATE 
+         Hibernate Configuration
+		 Entity Class (& It's annotations)
+		 @Transient
+	->	 @OneToMany, @OneToOne, @ManyToOne (Imp)
+		 (@Transactional, @Propogation,)  -> https://www.youtube.com/watch?v=a7u_8Apd6f4
+ACID
+@Formula (Joins)
+        Hibernate @Formula annotation is used to perform calculations on database instead of JVM (aggregate functions for example) and map a result to entity field.
+        Can be used in @Entity class to evaluate (@org.hibernate.annotations.Formula("(select avg(b.bidAmount) from DerivedProperty b where b.bidAmount = 200)"))
+
+Delete,Drop, Truncate
+Primary, Unique
+How many primary key 
+Functions and Stored procedures
+What are Indexes in sql  (  Create index index_name on Table(column)  )
+Second highest salary, 3rd highest salary
+
+Thread.interrupt() , Thread.stop()
+wait(), sleep()
+Runnable, Callable
+ExecutorService
+Why Thread.start() instead of Thread.run(), What's the result when we do Thread.run()
+   ->> https://stackoverflow.com/questions/4830302/why-cant-we-directly-call-the-run-method#:~:text=Because%20start%20%28%29%20will%20do%20it%20as%20a,for%20work%2C%20that%20would%20be%20a%20bad%20thing.
+Garbage Collector
+finalize()
+Thread Synchronization
+how can we achieve thread safety		 		 
+Way to interrupt synchronous thread
+   https://www.geeksforgeeks.org/interrupting-a-thread-in-java/
+
+
+How to make custom exception and how they'll be identified by JVM
+  ->>> https://www.geeksforgeeks.org/user-defined-custom-exception-in-java/ 
+GlobalExceptionHandler
+@RestControllerAdvice
+Exception Handling in Spring
+Try, Catch, Finally
+Can we only use Try
+Exception vs Error
+throw vs throws
+
+
+What if there are 2 properties file present in resources folder, Which one will it pick 
+How jvm, memory works, Where are objects, strings, variables stored
+One to Many Table -> SQL Implementation
+Strings Storage, Ways of creating (https://www.geeksforgeeks.org/storage-of-string-in-java/)
+@Volatile
+Why yml file? Why not .properties? Which is better?
+Why is char[] preferred over string if theres an security issue
+for & forEach
+while and do-while
+Junit (Unit testing)
+AGILE
+   
+Core Java 8, Spring Boot,Rest API, microservices hibernate MySQL
+
+
