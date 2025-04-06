@@ -16,5 +16,14 @@ class Main {
             default:
                 System.out.println("Other Fruit");
         }
+
+        // Enhanced Switch (new way)
+
+        switch("Apple"){
+            case "Apple" -> System.out.println("This is Apple");
+            case "Mango" -> System.out.println("This is Mango");
+            default -> System.out.println("Other Fruit");
+        }
+        
     }
 }
