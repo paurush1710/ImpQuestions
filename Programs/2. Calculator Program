@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        
+        Scanner s = new Scanner(System.in);
+        int ans = 0;
+        
+        while (true)
+        {
+            System.out.println("Enter the operator:");
+            
+            char ch = s.next().trim().charAt(0);
+            
+            System.out.print("Enter the two numbers:");
+            int a = s.nextInt();
+            int b = s.nextInt();
+            
+            if( ch == '+')
+                ans = a+b;
+                
+            else if( ch == '-')
+                ans = a-b;
+                
+            else if( ch == '*')
+                ans = a*b;
+                
+            else if( ch == '/' && b!= 0)
+                ans = a/b;
+            
+            else if ( ch == 'x' || ch=='X')
+                break;
+            
+            else
+              System.out.print("Invalid operator"); 
+              
+            System.out.println(ans); 
+        }
+        
+    }
+}
