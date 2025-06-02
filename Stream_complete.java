@@ -18,7 +18,7 @@ public class Solution {
 
 //		List<Integer> list = Arrays.asList(2,5,1,8,9,10,12,7);              // Arrays.asList() -> Immutable, will thrown exception on add,delete
 //		List<Integer> list2 = new ArrayList<>(Arrays.asList(1,2,3,4));      // Mutable -> Alternate to Arrays.asList() 
-//		List<Integer> list3 = Stream.of(1,2,3).collect(Collectors.toList());
+//		List<Integer> list3 = Stream.of(1,2,3).collect(Collectors.toList()); // This creates a mutable ArrayList by default. You can add, remove, or modify elements in this list
 
 		List<Integer> list = Arrays.asList(2, 5, 1, 8, 9, 10, 12, 7);
 
