@@ -1,1 +1,343 @@
+* Why Java 8?
+  Introduced major language and runtime enhancements -> improved productivity, performance, and code readability.
+  Minimal code
+  Java isn't a pure functional language, 
+  but with Java 8 features like lambdas, streams, and Optional, 
+  it supports many functional programming principles.
+  Introduced lambda expression, streams, Date & Time API
+  Default and Static Methods in Interfaces
+  Optional to Avoid NullPointerExceptions
+
+* Functional programming (FP) 
+  is a programming paradigm where computation is treated as the evaluation of mathematical functions and the avoidance of changing state or mutable data.
+
+  Functional programming is a way of writing programs where:
+  You use functions to do all the work.
+  You avoid changing variables or data once they’re set.
+  No changing values (everything stays the same once created).
+  No side effects (functions don’t affect anything outside themselves).
+  Functions are treated like values (you can pass them around).
+
+  Cleaner, more concise code
+  Fewer bugs related to mutable state
+  Better support for concurrency and parallelism
+
+  They enable functional programming style — treating behavior (functions) as values
+
+* Functional Interface
+  A functional interface in Java is an interface that has exactly one abstract method.
+  Functional Interfaces were introduced in Java 8
+  These are used primarily to enable lambda expressions and method references in Java 8 and later.
+  Purpose: It represents a single functionality (like a function) that you can implement using a lambda expression or method reference.
+
+  Can have only one abstract method
+  Can have default and static methods (Java 8+)
+  Can be annotated with @FunctionalInterface (optional, but recommended)
+  Built-in Functional Interfaces (in java.util.function)
+
+* Lambda Expression
+  A lambda expression in Java is a concise way to represent an anonymous function (i.e., a function without a name) that can be passed around—typically as a parameter to methods.
+  (is a anonymous function - no name, no return type, no access modifier)
+
+  Why Use Lambda Expressions?
+  Reduce boilerplate code (e.g., no need for anonymous classes)
+  Enhance readability
+  Enable functional-style operations like those in Streams API
+  Mostly it is used to implement functional interface
+  Lambda expressions cannot be used with interfaces that have more than one abstract method.
+
+  Before Java 8, Java didn’t have lambda expressions, 
+  so if you wanted to implement an interface inline—especially a functional interface (one with just a single method)—you had to use an anonymous inner class.
+
+  Basic Syntax : (parameters) -> { body }
+  (String s) -> System.out.println(s)
+  s -> System.out.println(s)
+
+  Greeting greet = () -> { 
+        System.out.println("Hello");
+   }
+
+  Since Greet is a functional interface and has only one abstract method.
+  It is that method.
+  and whenever we are doing (), it means we are calling that abstract method.
+
+  So where are lambdas used?
+    Lambda expressions can only be used where a functional interface is expected.
+    Built-in functional interfaces (from java.util.function) like Predicate, Function, Consumer, etc.
+    Custom functional interfaces that you define.
+    Standard Java APIs that take functional interfaces, like:
+    Runnable for threads
+    Comparator for sorting
+    Streams (filter, map, forEach, etc.)
+    -> In Streams :
+          Streams themselves are not functional interfaces.
+          But all the stream operations use functional interfaces (like Predicate, Function, Consumer, etc.).
+          That’s why lambda expressions work so well with streams — because the methods take functional interfaces as arguments.
+          - filter expects a Predicate<T>, which is a functional interface
+          - map takes a Function<T, R>
+          - forEach expects a Consumer<T>
+
+* Anonymous Class
+  An anonymous class in Java is a local class without a name.
+  It allows you to define and instantiate a class at the same time, usually for one-time use, especially when implementing interfaces or abstract classes.
+  To override methods of a class or interface without creating a separate named class.
+  Can't have constructors.
+
+  Eg : 
+  interface( greeting ) -> void say(String msg);
+  
+  class HelloGreeting implements Greeting {
+      @Override
+      public void say(String message) {
+          System.out.println("Hello, " + message);
+      }
+   }
+
+  public class Main {
+      public static void main(String[] args) {
+          Greeting greet = new HelloGreeting();
+          greet.say("Alice");
+      }
+  }
+
+  Before Java 8 (No Lambda Expression, Using Anonymous class)-> 
+
+  @FunctionalInterface
+  interface Greeting {
+      void say(String message);
+  }
+
+  public class Main {
+      public static void main(String[] args) {
+          // Using an anonymous class
+          Greeting greet = new Greeting() {
+              @Override
+              public void say(String message) {
+                  System.out.println("Hello, " + message);
+              }
+          };
+        
+          greet.say("Alice");
+      }
+  }
+
+  After Java 8 (Using Lambda Expression)
+
+    @FunctionalInterface
+    interface Greeting {
+      void say(String message);
+    }
+
+    public class Main {
+        public static void main(String[] args) {
+            // Using a lambda expression
+            Greeting greet = msg -> System.out.println("Hello, " + msg);
+
+            greet.say("Alice");
+        }
+    }
+
+  In lambda expressions, the use of the **return** statement depends on whether the lambda has a single expression or a block body.
+
+  Greeting greet = msg -> "Hello, " + msg;
+
+  Greeting greet = msg -> {
+      String message = "Hello, " + msg;
+      return message;
+  };
+
+  Thread t1 = new Thread( () -> {
+      for ( int i=0; i<10; i++ ){
+            System.out.println("Hello World");
+      }
+  } );
+
+  interface MathOperation{
+      int operate(int a, int b);
+  }
+
+  MathOperation sumOperation = (a,b) -> a+b;
+  MathOperation subOperation = (a,b) -> a-b;
+  int sum = sumOperation(2,4);
+  int diff = sumOperation(4,1);
+
+  Lambda expression can be put into reference of any functional interface.
+  Reference of functional interface can hold lambda expression.
+
+* Default Method
+  A default method in Java is a method defined inside an interface with a default implementation.
+  It was introduced in Java 8 to allow developers to add new methods to interfaces without breaking the classes that already implement them.
+
+  Why Default Methods?
+  Before Java 8, interfaces could only have abstract methods (no method body). That meant:
+
+  If you added a new method to an interface, every class implementing it would break, because they'd need to implement that new method.
+  Default methods solve this by allowing a method with a body (implementation) in the interface.
+
+  interface MyInterface {
+    default void show() {
+        System.out.println("This is a default method.");
+    }
+  }
+
+  A class can override a default method.
+
+* Static Methods in Interfaces (Java 8+)
+  A static method in Java is a method that belongs to a class or interface itself, rather than to instances (objects) of that class or interface. 
+  This means you can call it without creating an object.
+
+  Static methods are commonly used in utility or helper classes (e.g., Math, Collections).
+  You cannot access non-static (instance) variables directly from a static method.
+  Why?
+      When you call a static method, there's no object instance available — it's being executed in the context of the class, not any specific object.
+      But instance (non-static) variables belong to an object, so the static method doesn't know which object’s variable to refer to.
+      A static method cannot access anything that requires an instance, unless you explicitly create or receive an instance of the class.  
+  You can call other static methods or access static variables within a static method.
+  We can access static variables from non-static methods in Java.
+
+  Before Java 8, interfaces could not have any method implementations. 
+  Java 8 introduced static methods in interfaces as a way to include helper or utility methods that are tied to the interface but not to any instance.
+
+* Predicate 
+  Is a functional interface.
+  Has boolean value function, boolean test(T t);
+  T is the type of input the predicate checks.
+  The method boolean test(T t) returns true or false depending on whether the input matches a condition.
+
+  1. Predicate<String> – works with strings:
+     Predicate<String> isLong = s -> s.length() > 5;
+
+     System.out.println(isLong.test("Apple"));     // false
+     System.out.println(isLong.test("Bananas")); 
+     Here, T is String
+
+  2. Predicate<Integer> – works with numbers:
+     Predicate<Integer> isEven = num -> num % 2 == 0;
+
+     System.out.println(isEven.test(4));  // true
+     System.out.println(isEven.test(7));  // false
+     Here, T is Integer.
+
+  you can combine two Predicate<String> instances to check if a string starts AND ends with a certain letter.
+
+  Step 1: Define the two predicates
+  Predicate<String> startsWithA = s -> s.startsWith("A");
+  Predicate<String> endsWithZ = s -> s.endsWith("Z");
+
+  Step 2: Combine with and()
+  Predicate<String> startsAndEnds = startsWithA.and(endsWithZ);
+
+  Step 3: Test with some strings
+  System.out.println(startsAndEnds.test("ABZ"));    // true (starts with A, ends with Z)
+  System.out.println(startsAndEnds.test("AZ"));     // true
+  System.out.println(startsAndEnds.test("BZ"));     // false (does not start with A)
+  System.out.println(startsAndEnds.test("AB"));     // false (does not end with Z)
+
+* Function
+  It is a functional interface introduced in java 8
+  Have methods like apply(), compose(), andThen()
+  @FunctionalInterface
+  public interface Function<T, R>{
+      R apply(T t);
+  }
+
+  <T> – the type of the input to the function 
+  <R> – the type of the result of the function
+
+        Function<Integer, Integer> doubleIt = x -> x*2;
+        System.out.println(doubleIt.apply(20));
+        Function<Integer, Integer> tripleIt = x -> x*3;
+        System.out.println(tripleIt.apply(20));
+        System.out.println(doubleIt.andThen(tripleIt).apply(20));
+
+        System.out.println(doubleIt.compose(tripleIt).apply(20)); // first triples it, then doubles it
+
+        Function<Integer, Integer> identity = Function.identity();
+        System.out.println(identity.apply(5));
+
+* Consumer
+  It is a functional interface
+  Will take input, won't return anything. Instead will use that input
+  Have methods like accept(), andThen() -> modifies in sequence
+
+  @FunctionalInterface
+  public interface Consumer<T> {
+
+    /**
+     * Performs this operation on the given argument.
+     *
+     * @param t the input argument
+     */
+    void accept(T t);
+   }
+
+    Consumer c = s-> System.out.println(s);
+    c.accept("Consum");
+    c.accept(5);
+
+        List<Integer> list = Arrays.asList(1,2,3);
+        Consumer<List<Integer>> consumer = x -> {
+            for ( int i : x){
+                System.out.println(i);
+            }
+        };
+
+        consumer.accept(list);
+
+* Supplier
+  Doesn't take anything as input, only returns
+
+  @FunctionalInterface
+  public interface Supplier<T> {
+
+      /**
+       * Gets a result.
+       *
+       * @return a result
+       */
+      T get();
+  }
+
+  Supplier<String> supplier = () -> "Hello World!";
+  System.out.println(supplier.get());
+
+* Combination of all
+
+        Predicate<Integer> predicate = x -> x%2==0;
+        Function<Integer, Integer> function = x -> x*x;
+        Consumer<Integer> consumer = x -> System.out.println(x);
+        Supplier<Integer> supplier = () -> 100;
+
+        if (predicate.test(supplier.get()))
+        {
+            consumer.accept(function.apply(supplier.get()));
+        }
+
+  Predicate, Consumer, Supplier takes 1 arguments.  
+  But there are some methods which take 2 arguments as well
+  // Bi
+
+  BiPredicate
+  BiPredicate<Integer, Integer> biPredicate = (x, y) -> (x + y) % 2 == 0;
+  System.out.println(biPredicate.test(5, 5));
+
+  BiConsumer
+  BiConsumer<String, Integer> biConsumer = (x, y) -> System.out.println(x + " has " + y + " Missiles.");
+  biConsumer.accept("Ram", 10);
+
+  BiFunction
+  BiFunction<String, String, Integer> biFunction = (x, y) -> (x + y).length();
+  System.out.println(biFunction.apply("Tokyo", "Koyto"));
+
+  UnaryOperator -> extends Function<T,T>
+  No need to repeat Function<Integer, Integer>
+
+  BinaryOperator
+  extends BiFunction<T,T,T> -> Used when all 3 are of same data types
+
+  BiFunction<Integer, Integer, Integer> sum = (x, y) -> (x + y);
+  System.out.println(sum.apply(2, 3));
+
+  UnaryOperator<Integer> unaryOperator = x -> x * 2;
+  BinaryOperator<Integer> binaryOperator = (x, y) -> (x + y);
 
