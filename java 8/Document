@@ -341,3 +341,235 @@
   UnaryOperator<Integer> unaryOperator = x -> x * 2;
   BinaryOperator<Integer> binaryOperator = (x, y) -> (x + y);
 
+* Method Reference
+
+  is a syntax in Java that allows us to refer to a method without invoking it.
+  We can use it in place of lambda expression
+
+  List<Integer> list = Arrays.asList(1, 2, 3);
+  list.forEach(e -> System.out.println(e)); // invoking method
+  list.forEach(System.out::println);        // Method is used as reference
+
+  Syntax of Method Reference in Java -> ClassName::methodName
+
+  Reference to a Static Method -> 
+  ClassName::staticMethodName
+  Function<String, Integer> parseInt = Integer::parseInt;
+
+  Reference to an Instance Method of a Particular Object ->
+  instance::instanceMethodName
+  String str = "Hello";
+  Supplier<Integer> length = str::length;
+
+  Reference to an Instance Method of an Arbitrary Object of a Particular Type ->
+  ClassName::instanceMethodName
+  List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+  names.sort(String::compareToIgnoreCase);
+
+  Lambda Equivalent Example ->
+  // Lambda expression
+  Consumer<String> print = s -> System.out.println(s);
+
+  // Method reference
+  Consumer<String> print = System.out::println;
+
+Use a method reference only when no argument is needed
+
+list.stream()
+     .filter(s -> s.startsWith("R"))
+     .forEach(System.out::println);
+
+String::startsWith("R")  // ❌
+
+* Constructor Reference
+
+  We’ll use Supplier to create a new ArrayList and Function to create a new Person object.
+
+  Purpose	                          Lambda Expression	                Constructor Reference
+  No-arg constructor	              () -> new ArrayList<>()	          ArrayList::new
+  One-arg constructor	              name -> new Person(name)	        Person::new
+  With custom functional types	    (args) -> new MyType(args)	      MyType::new
+
+  Example 1:
+        Supplier<List<String>> listLambda = () -> new ArrayList<>();
+        List<String> lambdaList = listLambda.get();
+        lambdaList.add("Lambda");
+        System.out.println("List from Lambda: " + lambdaList);
+
+        // Constructor reference
+        Supplier<List<String>> listMethodRef = ArrayList::new;
+        List<String> refList = listMethodRef.get();
+        refList.add("MethodRef");
+        System.out.println("List from Constructor Reference: " + refList);
+
+  Example 2:
+        Function<String, Person> lambda = name -> new Person(name);
+        Person p1 = lambda.apply("Alice");
+        System.out.println("Lambda Person: " + p1.getName());
+
+        // Constructor reference
+        Function<String, Person> ref = Person::new;
+        Person p2 = ref.apply("Bob");
+        System.out.println("Constructor Reference Person: " + p2.getName());
+
+-----------------------------------------------------------------------------------------------------------------------
+
+STREAMS - 
+
+Stream is an abstraction that allows you to process sequences of elements (like Lists or Sets) in a functional, declarative style.
+Think of a Stream like a pipeline of data flowing through a series of operations — such as filtering, mapping, sorting, and collecting.
+Introduced in Java 8, Simplify data processing
+Java Streams (from Java 8) allow us to process collections (like List, Set, etc.) 
+by chaining operations like filter, map, sort, collect, etc., 
+similar to how you might write a SQL query.
+Enables Easy parallelism
+
+Why It's Like SQL -
+
+| SQL        | Java Streams                     |
+| ---------- | -------------------------------- |
+| `SELECT`   | `map()`                          |
+| `WHERE`    | `filter()`                       |
+| `ORDER BY` | `sorted()`                       |
+| `GROUP BY` | `Collectors.groupingBy()`        |
+| `JOIN`     | `flatMap()` (can simulate joins) |
+
+* SQL Query ->
+
+  SELECT UPPER(name)
+  FROM users
+  WHERE name LIKE 'A%'
+  ORDER BY name;
+
+* Java Streams Equivalent ->
+
+  List<String> users = List.of("Alice", "Bob", "Angela", "Brian");
+
+  List<String> result = users.stream()
+      .filter(name -> name.startsWith("A"))
+      .map(String::toUpperCase)
+      .sorted()
+      .collect(Collectors.toList());
+
+  System.out.println(result);  // Output: [ALICE, ANGELA]
+
+* Common Stream Pipeline Structure
+
+  collection.stream()
+    .filter(...)       // filter elements
+    .map(...)          // transform elements
+    .sorted(...)       // sort elements
+    .collect(...)      // gather result
+
+  Each step in the pipeline is lazy, meaning it doesn't run until the terminal operation (like collect() or forEach()).
+
+* Source → Intermediate Ops → Terminal Op
+
+  | Type             | Example                              |
+  | ---------------- | ------------------------------------ |
+  | Source           | `.stream()` from `List`, `Set`, etc. |
+  | Intermediate Ops | `filter()`, `map()`, `sorted()`      |
+  | Terminal Ops     | `collect()`, `forEach()`, `count()`  |
+
+  Intermediate Operations > 
+  (Returns another Stream; lazy)
+
+  filter(), map(), sorted(), distinct(), limit()
+
+  Terminal Operations ->
+  (Triggers processing and ends the stream)
+
+  collect(), forEach(), count(), reduce()
+
+* Stream ≠ Collection
+
+  Collection	                            Stream
+  Stores data	                            Processes data
+  Can be modified (add/remove elements)	  Cannot modify data source
+  Eager (evaluates immediately)	          Lazy (evaluates only when needed)
+  Supports iteration (e.g. for-each)	    Supports functional operations
+
+* Key Features of Streams
+
+  Declarative: Write what to do, not how.
+
+  Lazy Evaluation: Operations like map, filter don’t run until a terminal operation like collect() or forEach() is called.
+
+  Parallel Processing: Use .parallelStream() to leverage multiple cores.
+
+  Chainable: You can chain multiple operations together in a single expression.
+
+* Creating streams
+
+  1) From collections
+      list.stream()
+
+  2) From Arrays
+      String[] array = {"a","b","c"};
+      Stream<String> stream = Arrays.stream(array);
+
+  3) Using Stream.of()
+      String<Integer> int = Stream.of(1,2,3);
+      Stream<String> strings = Stream.of("a","b");
+
+  4) Infinite Streams
+      Stream<Integer> generate = Stream.generate(()->1);
+      Stream.iterate(0, x -> x + 1); // 0 position is seed, means starts from 0 and keep on adding
+
+* Intermediate Operators 
+  Intermediate operations are the steps in a stream pipeline that transform a stream into another stream.
+  They are lazy — meaning they are not executed until a terminal operation (like collect() or forEach()) is invoked.
+
+  Key Characteristics -> Return a new Stream, Are chainable, Are lazy (no processing happens until the terminal operation)
+
+        // 1. filter
+
+        List<String> list = Arrays.asList("Ram","Shyam","John");
+        Stream<String> filterStream = list.stream().filter(e -> e.startsWith("R"));
+        // no filtering at this point
+
+        list.stream().filter(e -> e.startsWith("R")).forEach(System.out::println);
+        long r = list.stream().filter(e -> e.startsWith("R")).count();
+        System.out.println(r);
+
+        // 2. map
+
+        list.stream().map( e-> e.toUpperCase() ).forEach(System.out::println);
+        list.stream().map(String::toUpperCase);
+
+        // 3. sorted
+
+        Stream<String> sortedStream = list.stream().sorted();
+
+        // can be sorted by using comparator as well
+
+        Stream<String> sortedStreamUsingComparator = list.stream().sorted(Comparator.comparing(String::length));
+
+        // 4. distinct
+
+        List<String> list2 = Arrays.asList("Ram","Shyam","John","Ram");
+        System.out.println(list2.stream().filter(e -> e.startsWith("R")).distinct().count());
+
+        // 5. limit
+         Stream<Integer> streamIterator = Stream.iterate(1, i -> i + 1).limit(10);
+         List<Integer> list1 = streamIterator.collect(Collectors.toList());
+         System.out.println(list1);
+
+         // 6. skip
+        Stream<Integer> streamIterator1 = Stream.iterate(1, i -> i + 1).skip(10).limit(10);
+        List<Integer> list3 = streamIterator1.collect(Collectors.toList());
+        System.out.println(list3);
+
+        Stream<Integer> streamIterator4 = Stream.iterate(1, i -> i + 1).limit(10).skip(10);
+        List<Integer> list4 = streamIterator4.collect(Collectors.toList());
+        System.out.println(list4);
+
+* Terminal Operators
+
+
+
+
+
+
+  
+
